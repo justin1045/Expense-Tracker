@@ -1,0 +1,78 @@
+.expense-list {
+  width: 100%;
+  max-width: 800px;
+  margin: 2rem auto;
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+/* Header Section */
+.inner {
+  background: linear-gradient(to right, #3b82f6, #2563eb);
+  color: #fff;
+  font-weight: bold;
+  text-transform: uppercase;
+  font-size: 14px;
+  padding: 1rem;
+  text-align: center;
+}
+
+/* Style for the result container */
+.result-container {
+  border-top: 1px solid #e5e7eb;
+}
+
+/* Individual Row Styling */
+.resultDiv {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #f9fafb;
+  padding: 1rem;
+  border-bottom: 1px solid #e5e7eb;
+  transition: background-color 0.2s ease-in-out;
+}
+
+/* Row Hover Effect */
+.resultDiv:hover {
+  background-color: #f3f4f6;
+}
+
+/* Cell Styling */
+.resultDiv p {
+  width: 25%;
+  text-align: center;
+  font-size: 14px;
+  color: #374151;
+  font-weight: 500;
+}
+
+/* Date and Delete Button Container */
+.dateAndDelete {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 25%;
+  gap: 1rem;
+  cursor: pointer;
+}
+
+/* Date Styling */
+.dateAndDelete span {
+  font-size: 12px;
+  color: #6b7280;
+}
+
+/* Trash Button Styling */
+.fa-trash {
+  color: #ef4444;
+  cursor: pointer;
+  transition: color 0.2s ease-in-out;
+}
+
+/* Trash Hover Effect */
+.fa-trash:hover {
+  color: #dc2626;
+}

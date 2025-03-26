@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Expense Tracker & Tax Calculator</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+      integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link rel="stylesheet" href="output.css" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+
+  <body class="bg-gray-100 min-h-screen">
+    <!-- Auth Container -->
+    <div
+      id="auth-container"
+      class="container mx-auto p-6 flex justify-center items-center min-h-screen"
+    >
+      <!-- Login Form -->
+      <div id="login-form" class="bg-white p-6 rounded-lg shadow-md w-full max-w-md">
+        <h2 class="text-2xl font-bold mb-4 text-center">Login</h2>
+        <input
+          type="text"
+          id="login-username"
+          placeholder="Username"
+          class="w-full p-2 mb-4 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
+        />
+        <input
+          type="password"
+          id="login-password"
+          placeholder="Password"
+          class="w-full p-2 mb-4 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
+        />
+        <button
+          onclick="loginUser()"
+          class="w-full bg-blue-500 text-white p-2 rounded-lg hover:bg-blue-600 transition duration-200"
+        >
+          Login
+        </button>
+        <p class="mt-4 text-center">
+          Don't have an account?
+          <a
+            href="#"
+            onclick="toggleForm('signup')"
+            class="text-blue-600 hover:underline"
+            >Sign Up</a
+          >
+        </p>
+      </div>
+
+      <!-- Sign-up Form -->
+      <div
+        id="signup-form"
+        class="hidden bg-white p-6 rounded-lg shadow-md w-full max-w-md"
+      >
+        <h2 class="text-2xl font-bold mb-4 text-center">Sign Up</h2>
+        <input
+          type="text"
+          id="signup-name"
+          placeholder="Name"
+          class="w-full p-2 mb-4 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
+        />
+        <input
+          type="email"
+          id="signup-email"
+          placeholder="Email"
+          class="w-full p-2 mb-4 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
+        />
+        <input
+          type="text"
+          id="signup-username"
+          placeholder="Username"
+          class="w-full p-2 mb-4 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
+        />
+        <input
+          type="password"
+          id="signup-password"
+          placeholder="Password"
+          class="w-full p-2 mb-4 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
+        />
+        <button
+          onclick="registerUser()"
+          class="w-full bg-green-500 text-white p-2 rounded-lg hover:bg-green-600 transition duration-200"
+        >
+          Sign Up
+        </button>
+        <p class="mt-4 text-center">
+          Already have an account?
+          <a
+            href="#"
+            onclick="toggleForm('login')"
+            class="text-blue-600 hover:underline"
+            >Login</a
+          >
+        </p>
+      </div>
+    </div>
+
+    <!-- Main Application Dashboard -->
+    <div id="dashboard" class="hidden">
+      <div
+        class="bg-blue-600 text-white p-4 text-center font-bold"
+      >
+        <h2 id="welcome-user" class="text-xl"></h2>
+        <button
+          onclick="logoutUser()"
+          class="bg-red-500 text-white px-4 py-2 rounded-lg mt-4 hover:bg-red-600 transition duration-200"
+        >
+          Logout
+        </button>
+      </div>
+
+      <div class="container mx-auto p-6">
+        <!-- Heading -->
+        <h1 class="text-3xl font-bold text-gray-800 text-center mb-6">
+          Expense Tracker & Tax Calculator
+        </h1>
+
+        <!-- Balance Input Section -->
+        <div
+          class="h-[10rem] sm:h-[60px] mb-6 bg-white p-6 rounded-lg shadow-md border border-gray-200 flex justify-start items-center gap-4"
+        >
+          <label for="balance" class="text-sm font-medium text-gray-600">
+            Total Balance:
+          </label>
+          <input
+            type="number"
+            placeholder="Enter total balance"
+            id="balance_Input"
+            class="w-[40%] p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none transition duration-200"
+          />
+          <button
+            id="income_submit_button"
+            class="w-[30%] bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 focus:ring-2 focus:ring-blue-400 transition duration-200 cursor-pointer"
+          >
+            Add Balance
+          </button>
+        </div>
+
+        <!-- Expense Form -->
+        <div
+          class="expense flex flex-wrap justify-center gap-4 bg-white p-6 rounded-lg shadow-md border border-gray-200"
+        >
+          <!-- Expense Name -->
+          <div class="w-full md:w-1/4">
+            <label
+              for="expense-name"
+              class="block text-sm font-medium text-gray-600"
+              >Expense Name:</label
+            >
+            <input
+              type="text"
+              id="expense-name"
+              placeholder="Enter Name"
+              required
+              class="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none transition duration-200"
+            />
+          </div>
+
+          <!-- Amount -->
+          <div class="w-full md:w-1/4">
+            <label
+              for="expense-amount"
+              class="block text-sm font-medium text-gray-600"
+              >Amount:</label
+            >
+            <input
+              type="number"
+              id="expense-amount"
+              placeholder="Amount"
+              required
+              class="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none transition duration-200"
+            />
+          </div>
+
+          <!-- Category -->
+          <div class="w-full md:w-1/4">
+            <label
+              for="category"
+              class="block text-sm font-medium text-gray-600"
+              >Category:</label
+            >
+            <select
+              id="category"
+              class="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none transition duration-200"
+              required
+            >
+              <option value="select" disabled selected>Select One</option>
+              <option value="foods">Food</option>
+              <option value="groceries">Groceries</option>
+              <option value="travel">Travel</option>
+              <option value="bills">Bills</option>
+              <option value="other">Others</option>
+            </select>
+          </div>
+
+          <!-- Add Expense Button -->
+          <button
+            id="expense_button"
+            class="w-full md:w-auto bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 focus:ring-2 focus:ring-blue-400 transition duration-200 cursor-pointer"
+          >
+            Add Expense
+          </button>
+        </div>
+
+        <!-- Total Income -->
+        <p
+          id="total_Income"
+          class="text-center border-2 border-red-700 w-1/2 mx-auto mt-6 p-4 bg-red-50 rounded-lg shadow-sm"
+        >
+          Your income is: ₹0
+        </p>
+
+        <!-- Expense List Section -->
+        <div
+          class="expense-list w-full max-w-4xl mx-auto mt-8 bg-white rounded-lg shadow-md overflow-hidden border border-gray-200"
+        >
+          <div
+            class="inner flex justify-between items-center bg-gradient-to-r from-blue-500 to-blue-700 text-white font-bold uppercase text-sm p-4"
+          >
+            <p class="w-1/4 text-center">Expense Name</p>
+            <p class="w-1/4 text-center">Amount</p>
+            <p class="w-1/4 text-center">Category</p>
+            <p class="w-1/4 text-center">Action</p>
+          </div>
+          <div class="result-container divide-y divide-gray-200 bg-gray-50">
+            <!-- Dynamically added expenses via JS -->
+          </div>
+        </div>
+
+        <!-- Charts Section -->
+      <div class="charts flex flex-wrap justify-center gap-12 mt-6">
+        <!-- Bar Chart -->
+        <div class="w-full sm:w-1/2 max-w-sm">
+          <canvas
+            id="bar"
+            class="bg-white p-4 rounded-lg shadow-md w-full h-72"
+            width="400"
+            height="300"
+          ></canvas>
+        </div>
+
+        <!-- Pie Chart -->
+        <div class="w-full sm:w-1/2 max-w-sm">
+          <canvas
+            id="pie"
+            class="bg-white p-4 rounded-lg shadow-md w-full h-72"
+            width="400"
+            height="300"
+          ></canvas>
+        </div>
+      </div>
+
+      <!-- Tax Calculator Section -->
+      <div
+        id="tax-calculator"
+        class="flex flex-col justify-center items-center gap-6 w-full md:w-1/2 mx-auto mt-8 bg-white p-6 rounded-lg shadow-md border border-gray-200"
+      >
+        <h1 class="text-2xl font-bold text-gray-800">Tax Calculator</h1>
+
+        <form id="tax-form" class="w-full flex flex-col gap-4">
+          <input
+            type="number"
+            id="income-input"
+            placeholder="Enter Income to calculate tax"
+            class="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none transition duration-200"
+          />
+          <button
+            type="submit"
+            class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 focus:ring-2 focus:ring-blue-400 transition duration-200 cursor-pointer"
+          >
+            Calculate
+          </button>
+        </form>
+
+        <p class="text-gray-700">
+          Total Income: ₹ <span id="pre_income">0</span>
+        </p>
+        <p class="text-gray-700">Tax Rate: <span id="tax_rate">0%</span></p>
+
+        <!-- Tax Rate Guide -->
+        <div
+          id="tax-guide"
+          class="w-full bg-gray-100 rounded-lg p-4 border border-gray-200"
+        >
+          <h2 class="text-lg font-semibold mb-4 text-gray-800">
+            Tax Rate Guide
+          </h2>
+          <div class="space-y-2">
+            <div class="flex justify-between text-gray-600">
+              <p>Income above ₹10,00,000</p>
+              <p class="font-medium">20%</p>
+            </div>
+            <div class="flex justify-between text-gray-600">
+              <p>Income above ₹7,00,000</p>
+              <p class="font-medium">15%</p>
+            </div>
+            <div class="flex justify-between text-gray-600">
+              <p>Income above ₹5,00,000</p>
+              <p class="font-medium">10%</p>
+            </div>
+            <div class="flex justify-between text-gray-600">
+              <p>Income above ₹3,00,000</p>
+              <p class="font-medium">5%</p>
+            </div>
+          </div>
+        </div>
+
+        <p class="text-gray-700">Tax to Pay: ₹ <span id="total-tax">0</span></p>
+        <p class="text-gray-700">
+          Amount Left After Tax: ₹ <span id="post-tax-income">0</span>
+        </p>
+      </div>
+
+      <!-- Payment Section -->
+      <div id="payment" class="mt-8 text-center">
+        <h1 class="text-xl font-semibold mb-4">Proceed to Pay</h1>
+        <button
+          id="rzp-button1"
+          class="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 focus:ring-2 focus:ring-green-400 transition duration-200 cursor-pointer"
+        >
+          <i class="fas fa-money-bill-wave mr-2"></i> Checkout
+        </button>
+        
+      </div>
+    </div>
+
+    <!-- Razorpay, Chart.js, and JS Scripts -->
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="auth.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>
+
+<!-- npx @tailwindcss/cli -i ./input.css -o ./output.css --watch -->
