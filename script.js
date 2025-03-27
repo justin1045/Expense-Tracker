@@ -23,8 +23,13 @@ let barChartID;
 const pieChart = document.querySelector("#pie");
 let pieChartID;
 
+// ai button
+
+const AiButton = document.querySelector("#ai_button");
+const aiResponses = document.querySelectorAll(".ai_response"); 
+
 // Array to store expense objects
-const resultArray = [];
+let resultArray = [];
 
 let totalExpense = 0;
 let totalIncomeMoney;
@@ -41,17 +46,29 @@ totalIncomeIncomeButton.addEventListener("click", (e) => {
 });
 
 window.addEventListener("load", (e)=> {
+  if (localStorage.getItem("totalBalance")) {
 
-  let balance = localStorage.getItem("totalBalance");
+    let balance = localStorage.getItem("totalBalance");
   totalIncome.innerText = `Your income is : ${balance}`;
-  
-  if(localStorage.getItem("resultArray")) {
 
-    resultArray = JSON.parse(localStorage.getItem("resultArray"));
-  displayData(resultArray);
-
+  } else {
+    totalIncome.innerText = `Your income is : 0`;
   }
   
+
+  if(localStorage.getItem("result")) {
+    // console.log("hello");
+    
+    resultArray = JSON.parse(localStorage.getItem("result"));
+    displayData(resultArray);
+    createBarGraph(resultArray);
+    createPieGraph(resultArray);
+
+  }
+
+
+
+
 
 });
 
@@ -80,6 +97,8 @@ expenseButton.addEventListener("click", (e) => {
 
   totalExpense += Number(expenseInfo.Amount);
 
+  localStorage.setItem("totalExpense", totalExpense);
+
   if (totalExpense >= totalIncomeMoney*75/100) {
     alert("You have Exhausted 75% of your total income!!!");
   }
@@ -87,7 +106,7 @@ expenseButton.addEventListener("click", (e) => {
   // Add the expense to the result array
   resultArray.push(expenseInfo);
 
-  localStorage.setItem("resultArray", resultArray);
+  localStorage.setItem("result", JSON.stringify(resultArray));
   // Display the data and update charts
 
   displayData(resultArray);
@@ -135,6 +154,18 @@ function displayData(arr) {
 
     // Add delete functionality
     deleteButton.addEventListener("click", (e) => {
+
+      // console.log(typeof(totalExpense));
+      totalExpense = Number(localStorage.getItem("totalExpense"));
+
+      totalExpense -= Number(obj.Amount);
+      
+      // console.log(totalExpense);
+
+      localStorage.setItem("totalExpense", JSON.stringify(totalExpense));
+
+
+
       // Find the index of the clicked item
       let idx = resultArray.findIndex((ele) => {
         return ele.id == obj.id;
@@ -142,6 +173,8 @@ function displayData(arr) {
 
       // Remove item from the array
       resultArray.splice(idx, 1);
+
+      localStorage.setItem("result", JSON.stringify(resultArray));
 
       // Update the display and graphs after deletion
       displayData(resultArray);
@@ -362,6 +395,38 @@ document.getElementById("rzp-button1").onclick = function (e) {
   e.preventDefault();
 };
 
-// ai shit
+// ai 
+
+AiButton.addEventListener("click", (e) => {
+  let amount = Number(localStorage.getItem("totalExpense"));
+
+  let totalamount = Number(localStorage.getItem("totalBalance"));
+
+  if (amount >= totalamount * 80 / 100) {
+    aiResponses[0].innerText = "💡 You've spent over 80% of your income. It's time to slow down and focus on essential expenses to avoid overspending.";
+    aiResponses[1].innerText = "⚠️ Caution! You're nearing the limit of your budget. Consider reviewing your remaining funds and prioritize necessities.";
+  
+  } else if (amount >= totalamount * 60 / 100) {
+    aiResponses[0].innerText = "📊 You've used about 60% of your income. You're managing well so far—stay consistent to keep things balanced.";
+    aiResponses[1].innerText = "⏳ You're approaching the critical zone. Monitor upcoming expenses and plan carefully to maintain control.";
+  
+  } else if (amount >= totalamount * 40 / 100) {
+    aiResponses[0].innerText = "✅ Great job! You've spent 40% of your income. You're on track—keep an eye on your remaining budget.";
+    aiResponses[1].innerText = "🧠 Smart spending! You're halfway through your income. Stay mindful of future expenses to avoid surprises.";
+  
+  } else if (amount >= totalamount * 20 / 100) {
+    aiResponses[0].innerText = "🌟 You've spent 20% of your income. You're off to a strong start—keep tracking your expenses to stay in control.";
+    aiResponses[1].innerText = "🕰️ Good progress! You’ve kept your spending in check so far. Now’s the time to plan for upcoming priorities.";
+  
+  } else {
+    aiResponses[0].innerText = "🚀 You're just getting started! Less than 20% spent—this is the perfect moment to set financial goals.";
+    aiResponses[1].innerText = "💡 Smart move! With most of your income still intact, you have plenty of room to plan and make informed decisions.";
+  }
+  
+  
+});
+
+
+
 
 
