@@ -19,10 +19,13 @@
     <!-- Auth Container -->
     <div
       id="auth-container"
-      class="container mx-auto p-6 flex justify-center items-center min-h-screen"
+      class="container mx-auto p-6 flex flex-col justify-start items-center min-h-screen"
     >
       <!-- Login Form -->
-      <div id="login-form" class="bg-white p-6 rounded-lg shadow-md w-full max-w-md">
+      <div
+        id="login-form"
+        class="bg-white p-6 rounded-lg shadow-md w-full max-w-md"
+      >
         <h2 class="text-2xl font-bold mb-4 text-center">Login</h2>
         <input
           type="text"
@@ -103,9 +106,7 @@
 
     <!-- Main Application Dashboard -->
     <div id="dashboard" class="hidden">
-      <div
-        class="bg-blue-600 text-white p-4 text-center font-bold"
-      >
+      <div class="bg-blue-600 text-white p-4 text-center font-bold">
         <h2 id="welcome-user" class="text-xl"></h2>
         <button
           onclick="logoutUser()"
@@ -234,87 +235,111 @@
         </div>
 
         <!-- Charts Section -->
-      <div class="charts flex flex-wrap justify-center gap-12 mt-6">
-        <!-- Bar Chart -->
-        <div class="w-full sm:w-1/2 max-w-sm">
-          <canvas
-            id="bar"
-            class="bg-white p-4 rounded-lg shadow-md w-full h-72"
-            width="400"
-            height="300"
-          ></canvas>
-        </div>
+        <div class="charts flex flex-wrap justify-center gap-12 mt-6">
+          <!-- Bar Chart -->
+          <div class="w-full sm:w-1/2 max-w-sm">
+            <canvas
+              id="bar"
+              class="bg-white p-4 rounded-lg shadow-md w-full h-72"
+              width="400"
+              height="300"
+            ></canvas>
+          </div>
 
-        <!-- Pie Chart -->
-        <div class="w-full sm:w-1/2 max-w-sm">
-          <canvas
-            id="pie"
-            class="bg-white p-4 rounded-lg shadow-md w-full h-72"
-            width="400"
-            height="300"
-          ></canvas>
-        </div>
-      </div>
-
-      <!-- Tax Calculator Section -->
-      <div
-        id="tax-calculator"
-        class="flex flex-col justify-center items-center gap-6 w-full md:w-1/2 mx-auto mt-8 bg-white p-6 rounded-lg shadow-md border border-gray-200"
-      >
-        <h1 class="text-2xl font-bold text-gray-800">Tax Calculator</h1>
-
-        <form id="tax-form" class="w-full flex flex-col gap-4">
-          <input
-            type="number"
-            id="income-input"
-            placeholder="Enter Income to calculate tax"
-            class="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none transition duration-200"
-          />
-          <button
-            type="submit"
-            class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 focus:ring-2 focus:ring-blue-400 transition duration-200 cursor-pointer"
-          >
-            Calculate
-          </button>
-        </form>
-
-        <p class="text-gray-700">
-          Total Income: ₹ <span id="pre_income">0</span>
-        </p>
-        <p class="text-gray-700">Tax Rate: <span id="tax_rate">0%</span></p>
-
-        <!-- Tax Rate Guide -->
-        <div
-          id="tax-guide"
-          class="w-full bg-gray-100 rounded-lg p-4 border border-gray-200"
-        >
-          <h2 class="text-lg font-semibold mb-4 text-gray-800">
-            Tax Rate Guide
-          </h2>
-          <div class="space-y-2">
-            <div class="flex justify-between text-gray-600">
-              <p>Income above ₹10,00,000</p>
-              <p class="font-medium">20%</p>
-            </div>
-            <div class="flex justify-between text-gray-600">
-              <p>Income above ₹7,00,000</p>
-              <p class="font-medium">15%</p>
-            </div>
-            <div class="flex justify-between text-gray-600">
-              <p>Income above ₹5,00,000</p>
-              <p class="font-medium">10%</p>
-            </div>
-            <div class="flex justify-between text-gray-600">
-              <p>Income above ₹3,00,000</p>
-              <p class="font-medium">5%</p>
-            </div>
+          <!-- Pie Chart -->
+          <div class="w-full sm:w-1/2 max-w-sm">
+            <canvas
+              id="pie"
+              class="bg-white p-4 rounded-lg shadow-md w-full h-72"
+              width="400"
+              height="300"
+            ></canvas>
           </div>
         </div>
 
-        <p class="text-gray-700">Tax to Pay: ₹ <span id="total-tax">0</span></p>
-        <p class="text-gray-700">
-          Amount Left After Tax: ₹ <span id="post-tax-income">0</span>
-        </p>
+        <!-- Tax Calculator Section -->
+        <div
+          id="tax-calculator"
+          class="flex flex-col justify-center items-center gap-6 w-full md:w-1/2 mx-auto mt-8 bg-white p-6 rounded-lg shadow-md border border-gray-200"
+        >
+          <h1 class="text-2xl font-bold text-gray-800">Tax Calculator</h1>
+
+          <form id="tax-form" class="w-full flex flex-col gap-4">
+            <input
+              type="number"
+              id="income-input"
+              placeholder="Enter Income to calculate tax"
+              class="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none transition duration-200"
+            />
+            <button
+              type="submit"
+              class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 focus:ring-2 focus:ring-blue-400 transition duration-200 cursor-pointer"
+            >
+              Calculate
+            </button>
+          </form>
+
+          <p class="text-gray-700">
+            Total Income: ₹ <span id="pre_income">0</span>
+          </p>
+          <p class="text-gray-700">Tax Rate: <span id="tax_rate">0%</span></p>
+
+          <!-- Tax Rate Guide -->
+          <div
+            id="tax-guide"
+            class="w-full bg-gray-100 rounded-lg p-4 border border-gray-200"
+          >
+            <h2 class="text-lg font-semibold mb-4 text-gray-800">
+              Tax Rate Guide
+            </h2>
+            <div class="space-y-2">
+              <div class="flex justify-between text-gray-600">
+                <p>Income above ₹10,00,000</p>
+                <p class="font-medium">20%</p>
+              </div>
+              <div class="flex justify-between text-gray-600">
+                <p>Income above ₹7,00,000</p>
+                <p class="font-medium">15%</p>
+              </div>
+              <div class="flex justify-between text-gray-600">
+                <p>Income above ₹5,00,000</p>
+                <p class="font-medium">10%</p>
+              </div>
+              <div class="flex justify-between text-gray-600">
+                <p>Income above ₹3,00,000</p>
+                <p class="font-medium">5%</p>
+              </div>
+            </div>
+          </div>
+
+          <p class="text-gray-700">
+            Tax to Pay: ₹ <span id="total-tax">0</span>
+          </p>
+          <p class="text-gray-700">
+            Amount Left After Tax: ₹ <span id="post-tax-income">0</span>
+          </p>
+        </div>
+
+        <!-- AI Section -->
+        <div
+          class="w-full sm:w-3/4 md:w-1/2 lg:w-1/3 xl:w-1/4 max-w-xs mx-auto border-2 border-gray-300 bg-white rounded-lg p-4 mt-10 shadow-md"
+          id="ai"
+        >
+          <h1 class="text-sm font-semibold mb-2 text-center text-gray-700">
+            Ask any question 🤔
+          </h1>
+          <textarea
+            id="ai-question"
+            placeholder="Type your question here..."
+            class="w-full h-[5rem] p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none resize-none"
+          ></textarea>
+          <button
+            onclick="askAI()"
+            class="w-full bg-blue-500 text-white p-2 rounded-lg hover:bg-blue-600 transition duration-200 mt-3"
+          >
+            Ask AI
+          </button>
+        </div>
       </div>
 
       <!-- Payment Section -->
@@ -326,7 +351,6 @@
         >
           <i class="fas fa-money-bill-wave mr-2"></i> Checkout
         </button>
-        
       </div>
     </div>
 

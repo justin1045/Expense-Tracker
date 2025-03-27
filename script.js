@@ -26,17 +26,38 @@ let pieChartID;
 // Array to store expense objects
 const resultArray = [];
 
-// ------------------------
-// 📌 Set Total Income
-// ------------------------
+let totalExpense = 0;
+let totalIncomeMoney;
+
+
+//  Set Total Income
+
 totalIncomeIncomeButton.addEventListener("click", (e) => {
   // Display the entered income value
   totalIncome.innerText = `Your income is : ${balanceInput.value}`;
+  totalIncomeMoney = Number(balanceInput.value);
+
+  localStorage.setItem("totalBalance",totalIncomeMoney);
 });
 
-// ------------------------
-// 📌 Add Expense
-// ------------------------
+window.addEventListener("load", (e)=> {
+
+  let balance = localStorage.getItem("totalBalance");
+  totalIncome.innerText = `Your income is : ${balance}`;
+  
+  if(localStorage.getItem("resultArray")) {
+
+    resultArray = JSON.parse(localStorage.getItem("resultArray"));
+  displayData(resultArray);
+
+  }
+  
+
+});
+
+
+// Add Expense
+
 expenseButton.addEventListener("click", (e) => {
   // Validation to check if all expense fields are filled
   if (
@@ -57,19 +78,28 @@ expenseButton.addEventListener("click", (e) => {
     id: Date.now(), // Unique identifier for each expense
   };
 
+  totalExpense += Number(expenseInfo.Amount);
+
+  if (totalExpense >= totalIncomeMoney*75/100) {
+    alert("You have Exhausted 75% of your total income!!!");
+  }
+
   // Add the expense to the result array
   resultArray.push(expenseInfo);
 
+  localStorage.setItem("resultArray", resultArray);
   // Display the data and update charts
+
   displayData(resultArray);
   clearExpenseData();
   createBarGraph(resultArray);
   createPieGraph(resultArray);
+
 });
 
-// ------------------------
-// 📌 Display Expense Data
-// ------------------------
+
+//  Display Expense Data
+
 function displayData(arr) {
   resultContainer.innerHTML = ""; // Clear previous data
   const fragment = document.createDocumentFragment();
@@ -127,9 +157,9 @@ function displayData(arr) {
   resultContainer.append(fragment);
 }
 
-// ------------------------
-// 📌 Clear Expense Data
-// ------------------------
+
+//  Clear Expense Data
+
 function clearExpenseData() {
   expenseInputs.forEach((input) => {
     input.value = ""; // Reset input values
@@ -137,9 +167,9 @@ function clearExpenseData() {
   expenseSelect.value = "select"; // Reset select dropdown
 }
 
-// ------------------------
-// 📊 Create Bar Chart
-// ------------------------
+
+// Create Bar Chart
+
 function createBarGraph(arr) {
   if (barChartID) {
     barChartID.destroy(); // Destroy previous chart instance if it exists
@@ -179,9 +209,9 @@ function createBarGraph(arr) {
   });
 }
 
-// ------------------------
-// 🥧 Create Pie Chart
-// ------------------------
+
+// Create Pie Chart
+
 function createPieGraph(arr) {
   if (pieChartID) {
     pieChartID.destroy(); // Destroy previous chart instance if it exists
@@ -216,9 +246,9 @@ function createPieGraph(arr) {
   });
 }
 
-// ------------------------
-// 📌 Tax Calculation Form
-// ------------------------
+
+// Tax Calculation Form
+
 taxForm.addEventListener("submit", (e) => {
   e.preventDefault(); // Prevent form submission
 
@@ -254,9 +284,9 @@ taxForm.addEventListener("submit", (e) => {
   taxIncome.innerText = incomeAfterTax.toFixed(2);
 });
 
-// ------------------------
-// 💳 Razorpay Payment Integration
-// ------------------------
+
+// Razorpay Payment Integration
+
 var options = {
   key: "rzp_test_dZqJ0BLhCLWNRv", // Razorpay test key
   amount: 100 * 10000, // Amount in paise (10000 = 100 INR)
@@ -331,3 +361,7 @@ document.getElementById("rzp-button1").onclick = function (e) {
   rzp1.open();
   e.preventDefault();
 };
+
+// ai shit
+
+
